@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "ee47cefd-8410-4d10-ad8c-d888b299acbb",
+		"name": "SMALLCASE TASK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET TRADES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/trade",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"trade"
+					]
+				},
+				"description": "- Returns all the trade executed by the user.\n\n- side denoted the trade type [\"SELL\",\"BUY\"]\n```JSON\n\nResponse:\n{\n    [\n        {\n            \"ticker_symbol\": \"TCS\",\n            \"price\": 11,\n            \"quantity\": 100,\n            \"side\": \"BUY\",\n            \"trade_id\": \"2bf42a4b-9700-4299-850e-40946f3af4cc\"\n        }\n    ]\n}\n\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "GET PORTFOLIO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/portoflio",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"portoflio"
+					]
+				},
+				"description": "- Returns all the stocks owned by the user.\n\n- side denoted the trade type [\"SELL\",\"BUY\"]\n\n- Avg_price denotes the avg_price of the stock\n\n## Response:\n\n```JSON\n{\n    [\n        {\n            \"ticker_symbol\": \"ABCD\",\n            \"avg_price\": 11,\n            \"quantity\": 100\n        }\n    ]\n}\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "POST TRADES",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ticker_symbol\": \"ABCD\",\n    \"price\": 1000000,\n    \"quantity\": 10000,\n    \"side\":\"BUY\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/trade",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"trade"
+					]
+				},
+				"description": "- Add a new trade user trade list and updates the portfolio.\n\n## Request\n**all feilds are mandatory*\n\n ## Response:\n- side denoted the trade type [\"SELL\",\"BUY\"]\n\n- Avg_price denotes the avg_price of the stock\n\n```JSON\n{\n    \"trade_id\": \"2bf42a4b-9700-4299-850e-40946f3af4cc\",\n    \"ticker_symbol\": \"ABCD\",\n    \"price\": 1000000,\n    \"quantity\": 10000,\n    \"side\": \"BUY\"\n}\n\n```\n"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE TRADE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"ticker_symbol\": \"ABCD\",\n        \"price\":11,\n        \"quantity\": 100,\n        \"side\": \"BUY\",\n       \"trade_id\": \"2bf42a4b-9700-4299-850e-40946f3af4cc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/trade",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"trade"
+					]
+				},
+				"description": "- Update a trade user from trade list and updates the portfolio.\n\n## Request\n**trade_id must be the lastest trade for the symbol*\n\n\n\n## Response\n- side denoted the trade type [\"SELL\",\"BUY\"]\n\n```JSON\n{\n    \"trade_id\": \"2bf42a4b-9700-4299-850e-40946f3af4cc\",\n    \"ticker_symbol\": \"TCS\",\n    \"price\": 1000000,\n    \"quantity\": 10000,\n    \"side\": \"BUY\"\n}\n\n```\n"
+			},
+			"response": []
+		},
+		{
+			"name": "REMOVE TRADE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"trade_id\": \"b8ae8b7b-8ae3-4fef-a9a8-dfbff42c353d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/trade/remove-trade",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"trade",
+						"remove-trade"
+					]
+				},
+				"description": "- Remove a trade user from trade list and updates the portfolio.\n\n## Request\n**trade_id must be the lastest trade for the symbol*\n\n\n\n## Response\n- side denoted the trade type [\"SELL\",\"BUY\"]\n\n```JSON\n{msg: \"trade removed success\"}\n\n```\n"
+			},
+			"response": []
+		},
+		{
+			"name": "GET RETURNS",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/portoflio/returns",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"portoflio",
+						"returns"
+					]
+				},
+				"description": "- Returns the current profit and loss of the user portfolio in Rs.\n\n- *taking current price as 100*\n\nResponse:\n\n```JSON\n{\n    pnl: 1000\n}\n```\n"
+			},
+			"response": []
+		}
+	]
+}
